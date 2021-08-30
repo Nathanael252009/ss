@@ -1,0 +1,16 @@
+.moneyContainer {
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(196, 235, 154);
+  background: linear-gradient(
+    6deg,
+    rgba(196, 235, 154, 1) 0%,
+    rgba(59, 198, 71, 1) 100%
+  );
+}
+.moneyContainer p{
+    font-size: 2rem;
+    color: white;
+}
