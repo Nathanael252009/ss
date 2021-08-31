@@ -14,13 +14,16 @@ function Receipt() {
           <span className={styles.receiptItemTitle}>{item.title}</span>
           <span className={styles.receiptItemQuantity}>x{item.quantity}</span>
           <span className={styles.receiptItemPrice}>
-            ${item.price * item.quantity}
+            $
+            {Number(item.price * item.quantity)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
           </span>
         </p>
       ))}
       <p className={styles.totalContainer}>
         <span>Total:</span>
-        <span>{total}</span>
+        <span>${total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</span>
       </p>
     </div>
   );

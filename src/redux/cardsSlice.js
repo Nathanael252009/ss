@@ -122,40 +122,46 @@ export const cardsSlice = createSlice({
       const quantity = action.payload.quantity;
 
       if (state.billsMoney > price * quantity) {
-        state.billsMoney -= price * quantity;
-      }
-
-      const updatedItems = state.items.map((item) =>
-        item.id === id ? { ...item, anyBuyed: true } : item
-      );
-      state.items = updatedItems;
-
-      const itemForReceipt = state.items.find((item) => item.id === id);
-
-      const itemDahaOnceAlindiMi = state.receiptItems.find(
-        (item) => item.id === id
-      );
-
-      if (itemDahaOnceAlindiMi === undefined) {
-        state.receiptItems.push(itemForReceipt);
-      } else {
-        const updatedReceipt = state.receiptItems.map((item) =>
-          item.id === id ? { ...item, quantity: quantity } : item
+        const updatedItems = state.items.map((item) =>
+          item.id === id ? { ...item, anyBuyed: true } : item
         );
-        state.receiptItems = updatedReceipt;
-      }
+        state.items = updatedItems;
 
-      let resultArr = [];
-      let total = 0;
-      state.receiptItems.map((item) => {
-        let result = item.quantity * item.price;
-        resultArr.push(result);
-      });
-      for (let i = 0; i < resultArr.length; i++) {
-        total += resultArr[i];
+        const itemForReceipt = state.items.find((item) => item.id === id);
+        const itemInReceipt = state.receiptItems.find((item) => item.id === id);
+
+        //money ile receipt rakamlarını senkronize ederi
+        if (itemInReceipt === undefined) {
+          state.billsMoney -= price * quantity;
+        } else if (itemForReceipt.quantity !== itemInReceipt.quantity) {
+          state.billsMoney -= price * quantity;
+        }
+
+        const itemDahaOnceAlindiMi = state.receiptItems.find(
+          (item) => item.id === id
+        );
+
+        //if item buyed before, only update the quantity
+        if (itemDahaOnceAlindiMi === undefined) {
+          state.receiptItems.push(itemForReceipt);
+        } else {
+          const updatedReceipt = state.receiptItems.map((item) =>
+            item.id === id ? { ...item, quantity: quantity } : item
+          );
+          state.receiptItems = updatedReceipt;
+        }
+
+        // total receipt amount calculation
+        let resultArr = [];
+        let total = 0;
+        state.receiptItems.map((item) => {
+          resultArr.push(item.quantity * item.price);
+        });
+        for (let i = 0; i < resultArr.length; i++) {
+          total += resultArr[i];
+        }
+        state.totalReceipt = total;
       }
-      state.totalReceipt = total;
-      console.log(resultArr);
     },
   },
 });

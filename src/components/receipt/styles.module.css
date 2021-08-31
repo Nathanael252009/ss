@@ -24,6 +24,7 @@
 .receiptItemPrice {
   text-align: right;
   width: 40%;
+  color: #24c486;
 }
 
 .totalContainer {
@@ -33,4 +34,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 1.2rem;
+}
+.totalContainer :last-child {
+  color: #24c486;
 }
