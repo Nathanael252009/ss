@@ -8,6 +8,20 @@
   justify-content: center;
   align-items: center;
 }
+.receiptItemInfo {
+  width: 320px;
+  display: flex;
+  justify-content: space-between;
+}
 .receiptItemInfo span {
-  margin-right: 2rem;
+}
+.receiptItemTitle {
+  width: 50%;
+}
+.receiptItemQuantity {
+  width: 10%;
+}
+.receiptItemPrice {
+  text-align: right;
+  width: 40%;
 }

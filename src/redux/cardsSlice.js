@@ -130,9 +130,19 @@ export const cardsSlice = createSlice({
       state.items = updatedItems;
 
       const itemForReceipt = state.items.find((item) => item.id === id);
-      console.log(state.receiptItems);
-      const newReceiptList = state.receiptItems.concat(itemForReceipt);
-      state.receiptItems = newReceiptList;
+
+      const itemDahaOnceAlindiMi = state.receiptItems.find(
+        (item) => item.id === id
+      );
+
+      if (itemDahaOnceAlindiMi === undefined) {
+        state.receiptItems.push(itemForReceipt);
+      } else {
+        const updatedReceipt = state.receiptItems.map((item) =>
+          item.id === id ? { ...item, quantity: quantity } : item
+        );
+        state.receiptItems = updatedReceipt;
+      }
     },
   },
 });
