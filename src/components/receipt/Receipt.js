@@ -16,6 +16,10 @@ function Receipt() {
           </span>
         </p>
       ))}
+      <p className={styles.totalContainer}>
+        <span>Total:</span>
+        <span>128 000 000 000</span>
+      </p>
     </div>
   );
 }

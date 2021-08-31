@@ -25,3 +25,12 @@
   text-align: right;
   width: 40%;
 }
+
+.totalContainer {
+  border-top: 1px solid black;
+  padding-top: 1rem;
+  width: 320px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
