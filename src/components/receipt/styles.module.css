@@ -1,0 +1,13 @@
+.receiptContainerDiv {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.receiptItemInfo span {
+  margin-right: 2rem;
+}

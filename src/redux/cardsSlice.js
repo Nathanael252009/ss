@@ -5,7 +5,6 @@ export const cardsSlice = createSlice({
   name: "cards",
   initialState: {
     billsMoney: 100000000000,
-    receiptItems: [],
     items: [
       {
         id: nanoid(),
@@ -104,11 +103,13 @@ export const cardsSlice = createSlice({
         anyBuyed: false,
       },
     ],
+    receiptItems: [],
   },
   reducers: {
     changeQuantity: (state, action) => {
       const id = action.payload.id;
       const targetvalue = action.payload.targetvalue;
+
       const updatedItems = state.items.map((item) =>
         item.id === id ? { ...item, quantity: targetvalue } : item
       );
@@ -127,6 +128,11 @@ export const cardsSlice = createSlice({
         item.id === id ? { ...item, anyBuyed: true } : item
       );
       state.items = updatedItems;
+
+      const itemForReceipt = state.items.find((item) => item.id === id);
+      console.log(state.receiptItems);
+      const newReceiptList = state.receiptItems.concat(itemForReceipt);
+      state.receiptItems = newReceiptList;
     },
   },
 });

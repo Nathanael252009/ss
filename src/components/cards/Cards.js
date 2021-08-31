@@ -6,6 +6,7 @@ import { changeQuantity, buyItem } from "../../redux/cardsSlice";
 function Cards() {
   const dispatch = useDispatch();
   const myitems = useSelector((state) => state.cards.items);
+  const myReceipts = useSelector(state=>state.cards.receiptItems);
 
   const handleChangeQuantity = (id, targetvalue) => {
     dispatch(changeQuantity({ id, targetvalue }));
@@ -17,6 +18,7 @@ function Cards() {
     const price = item.price;
     dispatch(buyItem({ id, quantity, price }));
     console.log(myitems);
+    console.log(myReceipts);
   };
   return (
     <div className={styles.gridContainer}>
