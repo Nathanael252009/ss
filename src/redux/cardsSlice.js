@@ -4,6 +4,8 @@ import { nanoid } from "nanoid";
 export const cardsSlice = createSlice({
   name: "cards",
   initialState: {
+    billsMoney: 100000000000,
+    receiptItems: [],
     items: [
       {
         id: nanoid(),
