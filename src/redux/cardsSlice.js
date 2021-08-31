@@ -104,6 +104,7 @@ export const cardsSlice = createSlice({
       },
     ],
     receiptItems: [],
+    totalReceipt: 0,
   },
   reducers: {
     changeQuantity: (state, action) => {
@@ -143,6 +144,18 @@ export const cardsSlice = createSlice({
         );
         state.receiptItems = updatedReceipt;
       }
+
+      let resultArr = [];
+      let total = 0;
+      state.receiptItems.map((item) => {
+        let result = item.quantity * item.price;
+        resultArr.push(result);
+      });
+      for (let i = 0; i < resultArr.length; i++) {
+        total += resultArr[i];
+      }
+      state.totalReceipt = total;
+      console.log(resultArr);
     },
   },
 });

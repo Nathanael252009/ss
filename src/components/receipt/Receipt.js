@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 
 function Receipt() {
   const receiptItems = useSelector((state) => state.cards.receiptItems);
+  const total = useSelector((state) => state.cards.totalReceipt);
+
   return (
     <div className={styles.receiptContainerDiv}>
       <h2>Your Receipt</h2>
@@ -18,7 +20,7 @@ function Receipt() {
       ))}
       <p className={styles.totalContainer}>
         <span>Total:</span>
-        <span>128 000 000 000</span>
+        <span>{total}</span>
       </p>
     </div>
   );
