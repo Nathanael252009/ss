@@ -16,6 +16,7 @@ function Cards() {
     const quantity = item.quantity;
     const price = item.price;
     dispatch(buyItem({ id, quantity, price }));
+    console.log(myitems);
   };
   return (
     <div className={styles.gridContainer}>

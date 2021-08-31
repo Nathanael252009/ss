@@ -122,6 +122,11 @@ export const cardsSlice = createSlice({
       if (state.billsMoney > price * quantity) {
         state.billsMoney -= price * quantity;
       }
+
+      const updatedItems = state.items.map((item) =>
+        item.id === id ? { ...item, anyBuyed: true } : item
+      );
+      state.items = updatedItems;
     },
   },
 });
