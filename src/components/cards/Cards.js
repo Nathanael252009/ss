@@ -1,18 +1,22 @@
-import { useState } from "react";
+import React from "react";
 import styles from "./styles.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { changeQuantity } from "../../redux/cardsSlice";
+import { changeQuantity, buyItem } from "../../redux/cardsSlice";
 
 function Cards() {
   const dispatch = useDispatch();
   const myitems = useSelector((state) => state.cards.items);
 
   const handleChangeQuantity = (id, targetvalue) => {
-    console.log("cardid", id);
-    console.log("cardvalue", targetvalue);
     dispatch(changeQuantity({ id, targetvalue }));
   };
 
+  const handleBuyItem = (item) => {
+    const id = item.id;
+    const quantity = item.quantity;
+    const price = item.price;
+    dispatch(buyItem({ id, quantity, price }));
+  };
   return (
     <div className={styles.gridContainer}>
       {myitems.map((item) => (
@@ -30,7 +34,12 @@ function Cards() {
               value={item.quantity}
               onChange={(e) => handleChangeQuantity(item.id, e.target.value)}
             />
-            <button className={styles.buyBtn}>Buy</button>
+            <button
+              className={styles.buyBtn}
+              onClick={() => handleBuyItem(item)}
+            >
+              Buy
+            </button>
           </div>
         </div>
       ))}

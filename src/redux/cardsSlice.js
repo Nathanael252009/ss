@@ -114,8 +114,17 @@ export const cardsSlice = createSlice({
       );
       state.items = updatedItems;
     },
+    buyItem: (state, action) => {
+      const id = action.payload.id;
+      const price = action.payload.price;
+      const quantity = action.payload.quantity;
+
+      if (state.billsMoney > price * quantity) {
+        state.billsMoney -= price * quantity;
+      }
+    },
   },
 });
 
-export const { changeQuantity } = cardsSlice.actions;
+export const { changeQuantity, buyItem } = cardsSlice.actions;
 export default cardsSlice.reducer;
