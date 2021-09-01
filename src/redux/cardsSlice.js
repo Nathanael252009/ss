@@ -97,7 +97,7 @@ export const cardsSlice = createSlice({
       {
         id: nanoid(),
         title: "NBA Team",
-        price: 2120000000,
+        price: 2000000000,
         img: "https://neal.fun/spend/images/nba-team.jpg",
         quantity: 0,
         anyBuyed: false,
@@ -111,15 +111,31 @@ export const cardsSlice = createSlice({
       const id = action.payload.id;
       const price = action.payload.price;
       const targetvalue = action.payload.targetvalue;
+      console.log("targetvalue", targetvalue);
+
+      const fark1 = state.items.find((item) => item.id === id).quantity;
+      const fark2 = Math.abs(fark1 - targetvalue);
 
       if (state.billsMoney > price * targetvalue) {
+        console.log("büyük if çalışıyor");
         //change item's quantity and anybuyed key
-        const updatedItems = state.items.map((item) =>
-          item.id === id
-            ? { ...item, anyBuyed: true, quantity: targetvalue }
-            : item
-        );
-        state.items = updatedItems;
+        if (targetvalue > 0) {
+          const updatedItems = state.items.map((item) =>
+            item.id === id
+              ? { ...item, anyBuyed: true, quantity: targetvalue }
+              : item
+          );
+          state.items = updatedItems;
+          console.log("büyük");
+        } else {
+          const updatedItems = state.items.map((item) =>
+            item.id === id
+              ? { ...item, anyBuyed: false, quantity: targetvalue }
+              : item
+          );
+          state.items = updatedItems;
+          console.log("sıfır");
+        }
 
         const itemForReceipt = state.items.find((item) => item.id === id);
         const itemInReceipt = state.receiptItems.find((item) => item.id === id);
@@ -127,8 +143,13 @@ export const cardsSlice = createSlice({
         // subtract from money if that item isnt in receipt or same quantity befor
         if (itemInReceipt === undefined) {
           state.billsMoney -= price * targetvalue;
-        } else if (itemForReceipt.quantity !== itemInReceipt.quantity) {
-          state.billsMoney -= price * targetvalue;
+          console.log("receipt icinde item yoktu");
+        } else if (itemForReceipt.quantity > itemInReceipt.quantity) {
+          state.billsMoney -= price * fark2;
+          console.log("money azaldı");
+        } else if (itemForReceipt.quantity < itemInReceipt.quantity) {
+          console.log("money arttı");
+          state.billsMoney += price * fark2;
         }
 
         //if item buyed before, only update the quantity
@@ -155,6 +176,11 @@ export const cardsSlice = createSlice({
         }
         state.totalReceipt = total;
       }
+    },
+    sellItem: (state, action) => {
+      const id = action.payload.id;
+      const price = action.payload.price;
+      const targetvalue = action.payload.targetvalue;
     },
   },
 });

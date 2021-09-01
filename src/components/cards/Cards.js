@@ -12,9 +12,7 @@ function Cards() {
     const id = item.id;
     const price = item.price;
 
-    if (targetvalue) {
-      targetvalue = targetvalue;
-    } else {
+    if (!targetvalue) {
       targetvalue = item.quantity + 1;
     }
 
@@ -36,6 +34,7 @@ function Cards() {
             <input
               className={styles.priceInput}
               type="number"
+              min="0"
               value={item.quantity}
               onChange={(e) => handleBuyItem(item, e.target.value)}
             />

@@ -8,7 +8,11 @@
 .carddiv {
   box-sizing: border-box;
   border-radius: 10px;
-  background-color: rgb(247, 239, 239);
+  background: radial-gradient(
+    592px at 48.2% 50%,
+    rgba(255, 255, 249, 0.6) 0%,
+    rgb(160, 199, 254) 74.6%
+  );
   height: 300px;
   padding: 2rem 1rem;
   display: flex;
@@ -56,12 +60,7 @@
 .buyBtn {
   padding: 0.5rem 1.5rem;
   font-size: 1rem;
-  background: rgb(196, 235, 154);
-  background: linear-gradient(
-    6deg,
-    rgba(196, 235, 154, 1) 0%,
-    rgba(59, 198, 71, 1) 100%
-  );
+  background: linear-gradient(180deg, #2ecc71, #1abc9c);
   cursor: pointer;
   outline: none;
   border: none;

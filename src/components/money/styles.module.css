@@ -3,16 +3,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(196, 235, 154);
-  background: linear-gradient(
-    6deg,
-    rgba(196, 235, 154, 1) 0%,
-    rgba(59, 198, 71, 1) 100%
-  );
+  background: linear-gradient(180deg, #2ecc71, #1abc9c);
   position: sticky;
   top: 0;
 }
-.moneyContainer p{
-    font-size: 2rem;
-    color: white;
+.moneyContainer p {
+  font-size: 2rem;
+  color: white;
 }
