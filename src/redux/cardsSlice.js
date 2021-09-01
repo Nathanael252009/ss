@@ -117,6 +117,7 @@ export const cardsSlice = createSlice({
     ],
     receiptItems: [],
     totalReceipt: 0,
+    moneyValueArr: [100000000000],
   },
   reducers: {
     changeOrder: (state, action) => {
@@ -162,6 +163,12 @@ export const cardsSlice = createSlice({
           state.billsMoney += price * fark2;
         }
 
+        //counter animation array
+        state.moneyValueArr.push(state.billsMoney);
+        if (state.moneyValueArr.length > 2) {
+          state.moneyValueArr.shift();
+        }
+
         //if item buyed before, only update the quantity
         const itemDahaOnceAlindiMi = state.receiptItems.find(
           (item) => item.id === id
@@ -188,7 +195,9 @@ export const cardsSlice = createSlice({
 
         //can buy more
         const updateBuyMore = state.items.map((item) =>
-          item.price > state.billsMoney ? { ...item, canBuyMore: false } : item
+          item.price > state.billsMoney
+            ? { ...item, canBuyMore: false }
+            : { ...item, canBuyMore: true }
         );
         state.items = updateBuyMore;
       }

@@ -28,7 +28,7 @@ function Receipt() {
           </p>
         ))}
         <p className={styles.totalContainer}>
-          <span>Total:</span>
+          <span>TOTAL:</span>
           <span>${total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</span>
         </p>
       </div>
