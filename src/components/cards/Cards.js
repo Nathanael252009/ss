@@ -8,15 +8,17 @@ function Cards() {
   const myitems = useSelector((state) => state.cards.items);
   const myReceipts = useSelector((state) => state.cards.receiptItems);
 
-  const handleChangeQuantity = (id, targetvalue) => {
-    dispatch(changeQuantity({ id, targetvalue }));
-  };
-
-  const handleBuyItem = (item) => {
+  const handleBuyItem = (item, targetvalue) => {
     const id = item.id;
-    const quantity = item.quantity;
     const price = item.price;
-    dispatch(buyItem({ id, quantity, price }));
+
+    if (targetvalue) {
+      targetvalue = targetvalue;
+    } else {
+      targetvalue = item.quantity + 1;
+    }
+
+    dispatch(buyItem({ id, price, targetvalue }));
   };
   return (
     <div className={styles.gridContainer}>
@@ -28,12 +30,14 @@ function Cards() {
             $ {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
           </p>
           <div className={styles.buyOptionsDiv}>
-            <button className={styles.sellBtn}>Sell</button>
+            <button className={styles.sellBtn} disabled={!item.anyBuyed}>
+              Sell
+            </button>
             <input
               className={styles.priceInput}
               type="number"
               value={item.quantity}
-              onChange={(e) => handleChangeQuantity(item.id, e.target.value)}
+              onChange={(e) => handleBuyItem(item, e.target.value)}
             />
             <button
               className={styles.buyBtn}

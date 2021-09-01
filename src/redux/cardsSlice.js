@@ -107,23 +107,18 @@ export const cardsSlice = createSlice({
     totalReceipt: 0,
   },
   reducers: {
-    changeQuantity: (state, action) => {
-      const id = action.payload.id;
-      const targetvalue = action.payload.targetvalue;
-
-      const updatedItems = state.items.map((item) =>
-        item.id === id ? { ...item, quantity: targetvalue } : item
-      );
-      state.items = updatedItems;
-    },
     buyItem: (state, action) => {
       const id = action.payload.id;
       const price = action.payload.price;
-      const quantity = action.payload.quantity;
+      // const quantity = action.payload.quantity;
+      const targetvalue = action.payload.targetvalue;
 
-      if (state.billsMoney > price * quantity) {
+      if (state.billsMoney > price * targetvalue) {
+        //change money value and quantity
         const updatedItems = state.items.map((item) =>
-          item.id === id ? { ...item, anyBuyed: true } : item
+          item.id === id
+            ? { ...item, anyBuyed: true, quantity: targetvalue }
+            : item
         );
         state.items = updatedItems;
 
@@ -132,9 +127,9 @@ export const cardsSlice = createSlice({
 
         //money ile receipt rakamlarını senkronize ederi
         if (itemInReceipt === undefined) {
-          state.billsMoney -= price * quantity;
+          state.billsMoney -= price * targetvalue;
         } else if (itemForReceipt.quantity !== itemInReceipt.quantity) {
-          state.billsMoney -= price * quantity;
+          state.billsMoney -= price * targetvalue;
         }
 
         const itemDahaOnceAlindiMi = state.receiptItems.find(
@@ -146,7 +141,7 @@ export const cardsSlice = createSlice({
           state.receiptItems.push(itemForReceipt);
         } else {
           const updatedReceipt = state.receiptItems.map((item) =>
-            item.id === id ? { ...item, quantity: quantity } : item
+            item.id === id ? { ...item, quantity: targetvalue } : item
           );
           state.receiptItems = updatedReceipt;
         }
