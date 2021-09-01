@@ -110,11 +110,10 @@ export const cardsSlice = createSlice({
     buyItem: (state, action) => {
       const id = action.payload.id;
       const price = action.payload.price;
-      // const quantity = action.payload.quantity;
       const targetvalue = action.payload.targetvalue;
 
       if (state.billsMoney > price * targetvalue) {
-        //change money value and quantity
+        //change item's quantity and anybuyed key
         const updatedItems = state.items.map((item) =>
           item.id === id
             ? { ...item, anyBuyed: true, quantity: targetvalue }
@@ -125,18 +124,17 @@ export const cardsSlice = createSlice({
         const itemForReceipt = state.items.find((item) => item.id === id);
         const itemInReceipt = state.receiptItems.find((item) => item.id === id);
 
-        //money ile receipt rakamlarını senkronize ederi
+        // subtract from money if that item isnt in receipt or same quantity befor
         if (itemInReceipt === undefined) {
           state.billsMoney -= price * targetvalue;
         } else if (itemForReceipt.quantity !== itemInReceipt.quantity) {
           state.billsMoney -= price * targetvalue;
         }
 
+        //if item buyed before, only update the quantity
         const itemDahaOnceAlindiMi = state.receiptItems.find(
           (item) => item.id === id
         );
-
-        //if item buyed before, only update the quantity
         if (itemDahaOnceAlindiMi === undefined) {
           state.receiptItems.push(itemForReceipt);
         } else {
@@ -146,7 +144,7 @@ export const cardsSlice = createSlice({
           state.receiptItems = updatedReceipt;
         }
 
-        // total receipt amount calculation
+        // total receipt amount calculation, thank javascript
         let resultArr = [];
         let total = 0;
         state.receiptItems.map((item) => {
