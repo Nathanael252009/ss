@@ -10,8 +10,13 @@ function Receipt() {
     return (
       <div className={styles.receiptContainerDiv}>
         <h2>Your Receipt</h2>
-        {receiptItems.map((item) => (
-          <p className={styles.receiptItemInfo}>
+        {receiptItems.map((item, index) => (
+          <p
+            className={
+              item.quantity > 0 ? styles.receiptItemInfo : styles.hidden
+            }
+            key={index}
+          >
             <span className={styles.receiptItemTitle}>{item.title}</span>
             <span className={styles.receiptItemQuantity}>x{item.quantity}</span>
             <span className={styles.receiptItemPrice}>

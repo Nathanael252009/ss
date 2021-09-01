@@ -13,6 +13,7 @@ export const cardsSlice = createSlice({
         img: "https://neal.fun/spend/images/big-mac.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
@@ -21,6 +22,7 @@ export const cardsSlice = createSlice({
         img: "https://neal.fun/spend/images/year-of-netflix.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
@@ -29,6 +31,7 @@ export const cardsSlice = createSlice({
         img: "https://neal.fun/spend/images/smartphone.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
@@ -37,6 +40,7 @@ export const cardsSlice = createSlice({
         img: "https://neal.fun/spend/images/acre-of-farmland.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
@@ -45,6 +49,7 @@ export const cardsSlice = createSlice({
         img: "https://neal.fun/spend/images/luxury-wine.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
@@ -53,6 +58,7 @@ export const cardsSlice = createSlice({
         img: "https://neal.fun/spend/images/jet-ski.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
@@ -61,6 +67,7 @@ export const cardsSlice = createSlice({
         img: "https://neal.fun/spend/images/tesla.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
@@ -69,6 +76,7 @@ export const cardsSlice = createSlice({
         img: "https://neal.fun/spend/images/single-family-home.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
@@ -77,6 +85,7 @@ export const cardsSlice = createSlice({
         img: "https://neal.fun/spend/images/boeing-747.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
@@ -85,40 +94,46 @@ export const cardsSlice = createSlice({
         img: "https://neal.fun/spend/images/skyscraper.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
         title: "Cruise Ship",
-        price: 930000000,
+        price: 950000000,
         img: "https://neal.fun/spend/images/cruise-ship.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
       {
         id: nanoid(),
         title: "NBA Team",
-        price: 2000000000,
+        price: 9000000000,
         img: "https://neal.fun/spend/images/nba-team.jpg",
         quantity: 0,
         anyBuyed: false,
+        canBuyMore: true,
       },
     ],
     receiptItems: [],
     totalReceipt: 0,
   },
   reducers: {
-    buyItem: (state, action) => {
+    changeOrder: (state, action) => {
       const id = action.payload.id;
       const price = action.payload.price;
       const targetvalue = action.payload.targetvalue;
-      console.log("targetvalue", targetvalue);
 
       const fark1 = state.items.find((item) => item.id === id).quantity;
-      const fark2 = Math.abs(fark1 - targetvalue);
+      const fark2 = Math.abs(targetvalue - fark1);
+      const fark3 = fark1 - targetvalue;
+      let buy = fark3 < 0 ? true : false;
 
-      if (state.billsMoney > price * targetvalue) {
-        console.log("büyük if çalışıyor");
-        //change item's quantity and anybuyed key
+      if (
+        100000000000 > price * targetvalue &&
+        ((buy && state.billsMoney - price * fark2 > 0) || !buy)
+      ) {
+        //change item's quantity and anybuyed
         if (targetvalue > 0) {
           const updatedItems = state.items.map((item) =>
             item.id === id
@@ -126,7 +141,6 @@ export const cardsSlice = createSlice({
               : item
           );
           state.items = updatedItems;
-          console.log("büyük");
         } else {
           const updatedItems = state.items.map((item) =>
             item.id === id
@@ -134,7 +148,6 @@ export const cardsSlice = createSlice({
               : item
           );
           state.items = updatedItems;
-          console.log("sıfır");
         }
 
         const itemForReceipt = state.items.find((item) => item.id === id);
@@ -143,12 +156,9 @@ export const cardsSlice = createSlice({
         // subtract from money if that item isnt in receipt or same quantity befor
         if (itemInReceipt === undefined) {
           state.billsMoney -= price * targetvalue;
-          console.log("receipt icinde item yoktu");
         } else if (itemForReceipt.quantity > itemInReceipt.quantity) {
           state.billsMoney -= price * fark2;
-          console.log("money azaldı");
         } else if (itemForReceipt.quantity < itemInReceipt.quantity) {
-          console.log("money arttı");
           state.billsMoney += price * fark2;
         }
 
@@ -175,15 +185,16 @@ export const cardsSlice = createSlice({
           total += resultArr[i];
         }
         state.totalReceipt = total;
+
+        //can buy more
+        const updateBuyMore = state.items.map((item) =>
+          item.price > state.billsMoney ? { ...item, canBuyMore: false } : item
+        );
+        state.items = updateBuyMore;
       }
-    },
-    sellItem: (state, action) => {
-      const id = action.payload.id;
-      const price = action.payload.price;
-      const targetvalue = action.payload.targetvalue;
     },
   },
 });
 
-export const { changeQuantity, buyItem } = cardsSlice.actions;
+export const { changeOrder } = cardsSlice.actions;
 export default cardsSlice.reducer;
