@@ -47,7 +47,7 @@
 }
 .sellBtn:disabled {
   border: initial;
-  background-color: rgba(222, 22, 22, 0.6);
+  background-color: rgba(222, 22, 22, 0.5);
 }
 
 .priceInput {
