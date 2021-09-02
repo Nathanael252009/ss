@@ -108,7 +108,7 @@ export const cardsSlice = createSlice({
       {
         id: nanoid(),
         title: "NBA Team",
-        price: 9000000000,
+        price: 2250000000,
         img: "https://neal.fun/spend/images/nba-team.jpg",
         quantity: 0,
         anyBuyed: false,
