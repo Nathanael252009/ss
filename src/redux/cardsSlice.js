@@ -130,10 +130,6 @@ export const cardsSlice = createSlice({
       const fark3 = fark1 - targetvalue;
       let buy = fark3 < 0 ? true : false;
 
-      if (targetvalue > 9999) {
-        return;
-      }
-
       if (
         100000000000 > price * targetvalue &&
         ((buy && state.billsMoney - price * fark2 > 0) || !buy)

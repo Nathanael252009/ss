@@ -12,6 +12,10 @@ function Cards() {
     const price = item.price;
     const innerHTML = targetvalue.innerHTML;
 
+    if (targetvalue > 9999) {
+      return;
+    }
+
     if (innerHTML === "Buy") {
       targetvalue = Number(item.quantity) + 1;
     } else if (innerHTML === "Sell") {
