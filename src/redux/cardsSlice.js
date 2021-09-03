@@ -54,7 +54,7 @@ export const cardsSlice = createSlice({
       {
         id: nanoid(),
         title: "Jet Ski",
-        price: 10000,
+        price: 11000,
         img: "https://neal.fun/spend/images/jet-ski.jpg",
         quantity: 0,
         anyBuyed: false,
@@ -63,7 +63,7 @@ export const cardsSlice = createSlice({
       {
         id: nanoid(),
         title: "House",
-        price: 250000,
+        price: 260000,
         img: "https://neal.fun/spend/images/single-family-home.jpg",
         quantity: 0,
         anyBuyed: false,
@@ -72,7 +72,7 @@ export const cardsSlice = createSlice({
       {
         id: nanoid(),
         title: "Factory",
-        price: 10000000,
+        price: 11000000,
         img: "https://www.freepngimg.com/thumb/machine/55396-5-factory-free-download-image.png",
         quantity: 0,
         anyBuyed: false,
@@ -130,7 +130,7 @@ export const cardsSlice = createSlice({
 
       if (
         100000000000 > price * targetvalue &&
-        ((buy && state.billsMoney - price * fark2 > 0) || !buy)
+        ((buy && state.billsMoney - price * fark2 >= 0) || !buy)
       ) {
         //change item's quantity and anybuyed
         if (targetvalue > 0) {
