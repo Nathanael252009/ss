@@ -121,9 +121,7 @@ export const cardsSlice = createSlice({
   },
   reducers: {
     changeOrder: (state, action) => {
-      const id = action.payload.id;
-      const price = action.payload.price;
-      const targetvalue = action.payload.targetvalue;
+      const { id, price, targetvalue } = action.payload;
 
       const fark1 = state.items.find((item) => item.id === id).quantity;
       const fark2 = Math.abs(targetvalue - fark1);
