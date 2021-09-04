@@ -123,14 +123,13 @@ export const cardsSlice = createSlice({
     changeOrder: (state, action) => {
       const { id, price, targetvalue } = action.payload;
 
-      const fark1 = state.items.find((item) => item.id === id).quantity;
-      const fark2 = Math.abs(targetvalue - fark1);
-      const fark3 = fark1 - targetvalue;
-      let buy = fark3 < 0 ? true : false;
+      const oldQuantity = state.items.find((item) => item.id === id).quantity;
+      const fark = oldQuantity - targetvalue;
+      const buy = fark < 0 ? true : false;
 
       if (
         100000000000 > price * targetvalue &&
-        ((buy && state.billsMoney - price * fark2 >= 0) || !buy)
+        ((buy && state.billsMoney - price * Math.abs(fark) >= 0) || !buy)
       ) {
         //change item's quantity and anybuyed
         if (targetvalue > 0) {
@@ -152,13 +151,13 @@ export const cardsSlice = createSlice({
         const itemForReceipt = state.items.find((item) => item.id === id);
         const itemInReceipt = state.receiptItems.find((item) => item.id === id);
 
-        // subtract from money if that item isnt in receipt or same quantity befor
+        // subtract from money if that item is not in receipt or same quantity before
         if (itemInReceipt === undefined) {
           state.billsMoney -= price * targetvalue;
         } else if (itemForReceipt.quantity > itemInReceipt.quantity) {
-          state.billsMoney -= price * fark2;
+          state.billsMoney -= price * Math.abs(fark);
         } else if (itemForReceipt.quantity < itemInReceipt.quantity) {
-          state.billsMoney += price * fark2;
+          state.billsMoney += price * Math.abs(fark);
         }
 
         //counter animation array
