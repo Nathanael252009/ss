@@ -131,7 +131,7 @@ export const cardsSlice = createSlice({
         100000000000 > price * targetvalue &&
         ((buy && state.billsMoney - price * Math.abs(fark) >= 0) || !buy)
       ) {
-        //change item's quantity and anybuyed
+        //change item's quantity and anybuyed property
         if (targetvalue > 0) {
           const updatedItems = state.items.map((item) =>
             item.id === id
@@ -151,7 +151,7 @@ export const cardsSlice = createSlice({
         const itemForReceipt = state.items.find((item) => item.id === id);
         const itemInReceipt = state.receiptItems.find((item) => item.id === id);
 
-        // subtract from money if that item is not in receipt or same quantity before
+        // subtract from money if that item is not in the receipt or same quantity before
         if (itemInReceipt === undefined) {
           state.billsMoney -= price * targetvalue;
         } else if (itemForReceipt.quantity > itemInReceipt.quantity) {
@@ -160,7 +160,7 @@ export const cardsSlice = createSlice({
           state.billsMoney += price * Math.abs(fark);
         }
 
-        //counter animation array
+        //array for counter animation
         state.moneyValueArr.push(state.billsMoney);
         if (state.moneyValueArr.length > 2) {
           state.moneyValueArr.shift();
@@ -179,7 +179,7 @@ export const cardsSlice = createSlice({
           state.receiptItems = updatedReceipt;
         }
 
-        // total receipt amount calculation, thank javascript
+        // total receipt amount calculation
         let resultArr = [];
         let total = 0;
         state.receiptItems.map((item) => {
@@ -190,7 +190,7 @@ export const cardsSlice = createSlice({
         }
         state.totalReceipt = total;
 
-        //can buy more
+        //can buy more for ternary logic in component
         const updateBuyMore = state.items.map((item) =>
           item.price > state.billsMoney
             ? { ...item, canBuyMore: false }
