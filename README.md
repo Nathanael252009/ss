@@ -15,3 +15,11 @@ See live: [https://spendmoney-hakan.netlify.app/](https://spendmoney-hakan.netli
 
 - buy/sell item via buttons or input area
 - buy/sell functions disabled when there is no enough money or no item to sell
+
+## Usage
+
+In the project directory, you can run:
+
+```
+yarn start
+```
