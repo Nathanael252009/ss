@@ -180,14 +180,10 @@ export const cardsSlice = createSlice({
         }
 
         // total receipt amount calculation
-        let resultArr = [];
         let total = 0;
         state.receiptItems.map((item) => {
-          resultArr.push(item.quantity * item.price);
+          total += item.quantity * item.price;
         });
-        for (let i = 0; i < resultArr.length; i++) {
-          total += resultArr[i];
-        }
         state.totalReceipt = total;
 
         //can buy more for ternary logic in component
