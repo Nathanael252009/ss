@@ -117,7 +117,7 @@ export const cardsSlice = createSlice({
     ],
     receiptItems: [],
     totalReceipt: 0,
-    moneyValueArr: [100000000000],
+    moneyValueArr: [100000000000, 100000000000],
   },
   reducers: {
     changeOrder: (state, action) => {
@@ -127,10 +127,7 @@ export const cardsSlice = createSlice({
       const fark = oldQuantity - targetvalue;
       const buy = fark < 0 ? true : false;
 
-      if (
-        100000000000 > price * targetvalue &&
-        ((buy && state.billsMoney - price * Math.abs(fark) >= 0) || !buy)
-      ) {
+      if ((buy && state.billsMoney - price * Math.abs(fark) >= 0) || !buy) {
         //change item's quantity and anybuyed property
         if (targetvalue > 0) {
           const updatedItems = state.items.map((item) =>
@@ -160,11 +157,9 @@ export const cardsSlice = createSlice({
           state.billsMoney += price * Math.abs(fark);
         }
 
-        //array for counter animation
+        //array for counter
         state.moneyValueArr.push(state.billsMoney);
-        if (state.moneyValueArr.length > 2) {
-          state.moneyValueArr.shift();
-        }
+        state.moneyValueArr.shift();
 
         //if item buyed before, only update the quantity
         const itemDahaOnceAlindiMi = state.receiptItems.find(
@@ -187,10 +182,12 @@ export const cardsSlice = createSlice({
         state.totalReceipt = total;
 
         //can buy more for ternary logic in component
-        const updateBuyMore = state.items.map((item) =>
-          item.price > state.billsMoney
-            ? { ...item, canBuyMore: false }
-            : { ...item, canBuyMore: true }
+        const updateBuyMore = state.items.map(
+          (item) =>
+            item && {
+              ...item,
+              canBuyMore: item.price > state.billsMoney ? false : true,
+            }
         );
         state.items = updateBuyMore;
       }
